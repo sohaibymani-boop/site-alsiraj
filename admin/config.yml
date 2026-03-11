@@ -1,12 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة التحكم</title>
-  <link href="https://unpkg.com/netlify-cms@^2.9.0/dist/netlify-cms.css" rel="stylesheet" />
-</head>
-<body>
-  <script src="https://unpkg.com/netlify-cms@^2.9.0/dist/netlify-cms.js"></script>
-</body>
-</html>
+# config.yml - ملف إعدادات Netlify CMS
+
+# الخلفية (Backend) - ربط مع GitHub
+backend:
+  name: github
+  repo: sohaibymani-boop/site-alsiraj   # اسم المستخدم/المستودع
+  branch: main                           # الفرع الرئيسي
+
+# مجلد رفع الوسائط (صور، ملفات)
+media_folder: "images/uploads"            # أين تحفظ الصور في المستودع
+public_folder: "/images/uploads"          # الرابط العام للصور
+
+# مجموعات المحتوى (Collections)
+collections:
+  - name: "services"                       # اسم المجموعة (للنظام)
+    label: "الخدمات"                        # التسمية الظاهرة في لوحة التحكم
+    folder: "_data/services"                 # مجلد حفظ ملفات الخدمات
+    create: true                              # السماح بإضافة خدمات جديدة
+    slug: "{{slug}}"                          # تنسيق اسم الملف
+    fields:                                   # الحقول المطلوبة لكل خدمة
+      - { label: "اسم الخدمة", name: "title", widget: "string" }
+      - { label: "الوصف", name: "description", widget: "text" }
+      - { label: "عدد النجوم", name: "stars", widget: "number", min: 1, max: 5, default: 5 }
+      - { label: "صورة الخدمة", name: "image", widget: "image" }
+
+  - name: "testimonials"                    # آراء العملاء
+    label: "آراء العملاء"
+    folder: "_data/testimonials"
+    create: true
+    fields:
+      - { label: "اسم العميل", name: "client_name", widget: "string" }
+      - { label: "الرأي", name: "content", widget: "text" }
+      - { label: "التقييم", name: "rating", widget: "number", min: 1, max: 5 }
+
+  - name: "gallery"                         # معرض الصور
+    label: "معرض الصور"
+    folder: "_data/gallery"
+    create: true
+    fields:
+      - { label: "عنوان الصورة", name: "title", widget: "string" }
+      - { label: "الصورة", name: "image", widget: "image" }
+
+  - name: "settings"                         # إعدادات عامة (مثل معلومات الاتصال)
+    label: "إعدادات الموقع"
+    files:
+      - name: "general"
+        label: "الإعدادات العامة"
+        file: "_data/settings.json"
+        fields:
+          - { label: "رقم الهاتف", name: "phone", widget: "string" }
+          - { label: "البريد الإلكتروني", name: "email", widget: "string" }
+          - { label: "رابط فيسبوك", name: "facebook", widget: "string", required: false }
+          - { label: "رابط واتساب", name: "whatsapp", widget: "string", required: false }
+          - { label: "عنوان الشركة", name: "address", widget: "string", required: false }
